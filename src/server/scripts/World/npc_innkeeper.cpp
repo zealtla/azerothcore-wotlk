@@ -5,6 +5,7 @@
 #include "GameEventMgr.h"
 #include "Player.h"
 #include "WorldSession.h"
+#pragma execution_character_set("utf-8")
 
 enum eTrickOrTreatSpells
 {
@@ -61,8 +62,39 @@ public:
     }
 };
 
+//多商NPC entry:200000
+class npc_newbie : public CreatureScript
+{
+public:
+    npc_newbie() : CreatureScript("npc_newbie") { }
+
+    bool OnGossipHello(Player* player, Creature* creature) override
+    {
+        AddGossipItemFor(player, GOSSIP_ICON_VENDOR, "新人装备", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        AddGossipItemFor(player, GOSSIP_ICON_VENDOR, "新人武器", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+        AddGossipItemFor(player, GOSSIP_ICON_VENDOR, "新手饰品", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3); 
+        
+        player->TalkedToCreature(creature->GetEntry(), creature->GetGUID());
+        SendGossipMenuFor(player, player->GetGossipTextId(creature), creature->GetGUID());
+        return true;
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
+    {
+        ClearGossipMenuFor(player);
+        switch (action)
+        {
+        case GOSSIP_ACTION_INFO_DEF + 1: player->GetSession()->SendListInventory(creature->GetGUID(), 200001); break; 
+        case GOSSIP_ACTION_INFO_DEF + 2: player->GetSession()->SendListInventory(creature->GetGUID(), 200002); break;
+        case GOSSIP_ACTION_INFO_DEF + 3: player->GetSession()->SendListInventory(creature->GetGUID(), 200003); break;
+        }
+        return true;
+    }
+};
+
 void AddSC_npc_innkeeper()
 {
     new npc_innkeeper;
+    new npc_newbie;
 }
 
