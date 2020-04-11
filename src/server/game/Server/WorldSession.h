@@ -217,13 +217,13 @@ class WorldSession
         std::string const& GetPlayerName() const;
         std::string GetPlayerInfo() const;
 
+        //Multi-vendor
         uint32 GetCurrentVendor() const { return GUID_ENPART(m_CurrentVendor); }
-        uint32 GetCurrentVendorGUID() const { return GUID_LOPART(m_CurrentVendor); }
-        //void SetCurrentVendor(uint32 vendorEntry) { m_currentVendorEntry = vendorEntry; }
+        uint32 GetCurrentVendorGUID() const { return GUID_LOPART(m_CurrentVendor); }       
         void SetCurrentVendor(uint32 vendorEntry, uint32 senderGUIDLow, uint32 senderGUIDHigh = HIGHGUID_UNIT)
         {
             m_CurrentVendor = MAKE_NEW_GUID(senderGUIDLow, vendorEntry, senderGUIDHigh);
-        }
+        }//Multi-vendor
 
         uint32 GetGuidLow() const;
         void SetSecurity(AccountTypes security) { _security = security; }
@@ -1005,7 +1005,7 @@ class WorldSession
         uint32 recruiterId;
         bool isRecruiter;
         ACE_Based::LockedQueue<WorldPacket*, ACE_Thread_Mutex> _recvQueue;
-        uint64 m_CurrentVendor;
+        uint64 m_CurrentVendor; //Multi-vendor
         uint64 m_currentBankerGUID;
         time_t timeWhoCommandAllowed;
         uint32 _offlineTime;

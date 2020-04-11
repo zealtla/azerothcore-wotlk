@@ -1118,6 +1118,9 @@ class Player : public Unit, public GridObject<Player>
             SetFloatValue(UNIT_FIELD_COMBATREACH, scale * DEFAULT_COMBAT_REACH);
         }
 
+        //20200409 增加获取名字链接函数
+        std::string GetPlayerNameLink(const std::string name);
+
         bool TeleportTo(uint32 mapid, float x, float y, float z, float orientation, uint32 options = 0, Unit *target = nullptr);
         bool TeleportTo(WorldLocation const &loc, uint32 options = 0, Unit *target = nullptr)
         {

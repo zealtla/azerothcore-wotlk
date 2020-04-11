@@ -887,6 +887,7 @@ void WorldSession::HandleListInventoryOpcode(WorldPacket & recvData)
     SendListInventory(guid);
 }
 
+//Multi-vendor
 void WorldSession::SendListInventory(uint64 vendorGuid, uint32 vendorEntry)
 {
 #if defined(ENABLE_EXTRAS) && defined(ENABLE_EXTRA_LOGS)
@@ -912,8 +913,9 @@ void WorldSession::SendListInventory(uint64 vendorGuid, uint32 vendorEntry)
         vendor->StopMoving();
 
     //VendorItemData const* items = vendor->GetVendorItems();
+    //Multi-vendor
     VendorItemData const* items = vendorEntry ? sObjectMgr->GetNpcVendorItemList(vendorEntry) : vendor->GetVendorItems();
-      
+    //Multi-vendor  
     if (!items)
     {
         WorldPacket data(SMSG_LIST_INVENTORY, 8 + 1 + 1);
@@ -923,9 +925,9 @@ void WorldSession::SendListInventory(uint64 vendorGuid, uint32 vendorEntry)
         SendPacket(&data);
         return;
     }
-
+    //Multi-vendor
     SetCurrentVendor(vendorEntry, GUID_LOPART(vendorGuid), GUID_HIPART(vendorGuid));
-
+    //Multi-vendor
     uint8 itemCount = items->GetItemCount();
     uint8 count = 0;
 

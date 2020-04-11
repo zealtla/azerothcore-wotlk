@@ -106,7 +106,7 @@ class ChatHandler
         // select by arg (name/link) or in-game selection online/offline player
         bool extractPlayerTarget(char* args, Player** player, uint64* player_guid = NULL, std::string* player_name = NULL);
 
-        std::string playerLink(std::string const& name) const { return m_session ? "|cffffffff|Hplayer:"+name+"|h["+name+"]|h|r" : name; }
+        std::string playerLink(std::string const& name) const { return m_session ? "|Hplayer:"+name+"|h["+name+"]|h" : name; }
         std::string GetNameLink(Player* chr) const;
 
         GameObject* GetNearbyGameObject();
