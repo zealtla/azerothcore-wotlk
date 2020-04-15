@@ -114,13 +114,8 @@ WorldSession::WorldSession(uint32 id, WorldSocket* sock, AccountTypes sec, uint8
     isRecruiter(isARecruiter),
     m_currentBankerGUID(0),
 	m_CurrentVendor(0), //multi-vendor
-<<<<<<< HEAD
-    //m_CurrentVendor(0), //Multi-vendor
-    timeWhoCommandAllowed(0)
-=======
     timeWhoCommandAllowed(0),
     _calendarEventCreationCooldown(0)
->>>>>>> upstream/master
 {
     memset(m_Tutorials, 0, sizeof(m_Tutorials));
 

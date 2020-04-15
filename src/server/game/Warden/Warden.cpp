@@ -18,6 +18,8 @@
 #include "Warden.h"
 #include "AccountMgr.h"
 #include "BanManager.h"
+#include "chat.h"
+#pragma execution_character_set("utf-8")
 
 Warden::Warden() : _session(NULL), _inputCrypto(16), _outputCrypto(16), _checkTimer(10000/*10 sec*/), _clientResponseTimer(0),
                    _dataSent(false), _previousTimestamp(0), _module(NULL), _initialized(false)
@@ -215,11 +217,15 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/, uint16 checkFailed /*
 
     switch (action)
     {
-    case WARDEN_ACTION_LOG:
+    case WARDEN_ACTION_LOG:        
+        sLog->outChar("Warden系统：账号：%d(IP: %s) 角色:[%s]被检测到作弊，WardenID: %d。", _session->GetAccountId(), _session->GetRemoteAddress().c_str(), _session->GetPlayerName(), checkFailed);
+        //测试用，发消息警告玩家
+        ChatHandler(_session).PSendSysMessage("|cffFF0000[系统警告]：|r玩家|cff00CC00[%s]|r作弊，WardenID：%d", _session->GetPlayerName(), checkFailed);
         return "None";
         break;
     case WARDEN_ACTION_KICK:
         _session->KickPlayer("WARDEN_ACTION_KICK");
+        sLog->outChar("Warden系统：账号：%d(IP: %s) 角色:[%s]被检测到作弊，WardenID: %d。", _session->GetAccountId(), _session->GetRemoteAddress().c_str(), _session->GetPlayerName(), checkFailed);
         return "Kick";
         break;
     case WARDEN_ACTION_BAN:
