@@ -27606,7 +27606,7 @@ std::string Player::GetPlayerNameLink(const std::string name)
     /*std::string name = player->GetName(); */
     std::string color;
 
-    switch (Player::getRace())
+    switch (Player::getClass())
     {
     case CLASS_DEATH_KNIGHT:
         color = "|cffC41F3B";
