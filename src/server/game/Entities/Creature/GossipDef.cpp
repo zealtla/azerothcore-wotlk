@@ -215,7 +215,7 @@ void PlayerMenu::SendGossipMenu(uint32 titleTextId, uint64 objectGUID) const
 
             int32 locale = _session->GetSessionDbLocaleIndex();
             if (QuestLocale const* localeData = sObjectMgr->GetQuestLocale(questID))
-                ObjectMgr::GetLocaleString(localeData->Title, locale, title);
+                ObjectMgr::GetLocaleString(localeData->Title, locale, title);           
             data << title;  
         }        
     }
@@ -457,7 +457,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, uint64 npcGUID, 
 
 void PlayerMenu::SendQuestQueryResponse(Quest const* quest) const
 {
-    std::string questTitle           = quest->GetTitle();
+    std::string questTitle           = "< " + to_string(quest->GetQuestId()) + " >" + quest->GetTitle();//增加任务标题前显示任务ID
     std::string questDetails         = quest->GetDetails();
     std::string questObjectives      = quest->GetObjectives();
     std::string questAreaDescription = quest->GetAreaDescription();
